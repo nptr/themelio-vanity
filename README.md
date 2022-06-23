@@ -16,7 +16,9 @@ PATTERN:
   Character `u` has no "leet" substitute and is invalid.
 ```
 
-(_Themelio uses base32 encoding with a restricted character set for better readability_)
+Notes:
+* Themelio uses base32 encoding with a restricted character set for better readability. No way around that.
+* Vanity address generators work with brute force. Searching for patterns longer than 4-5 characters WILL take time and keep rising massively with each additional character.
 
 ## Building
 Provided you have the Rust toolchain installed, call
