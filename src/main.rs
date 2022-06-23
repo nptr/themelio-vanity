@@ -126,7 +126,7 @@ fn alpha_to_num(char: char) -> Option<char> {
 fn fix_pattern(str: &String) -> Result<String, String> {
 	let lcstr = str.to_lowercase();
 	let mut pattern = String::with_capacity(lcstr.len());
-	
+
 	// First character after prefix must be a number. It stems from the
 	// checksum being appended to the public key before base32'ing.
 	let fc = lcstr.chars().nth(0).unwrap();
@@ -137,6 +137,15 @@ fn fix_pattern(str: &String) -> Result<String, String> {
 			fc
 		));
 	}
+
+	if fcnew.unwrap() != fc {
+		println!(
+			"Invalid first character '{}' in wallet address replaced with '{}'.",
+			fc,
+			fcnew.unwrap()
+		);
+	}
+
 	pattern.push(fcnew.unwrap());
 
 	// All other characters can be from the full Crockford alphabet.
