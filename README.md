@@ -13,7 +13,7 @@ PATTERN:
   0123456789abcdefghjkmnpqrstvwxyz. Unavailable are i,l,o and u.
 
   Characters `i,l,o` will be replaced with 1 or 0 respectively.
-  Character `u` has no "leet" substitute and is invalid.
+  `u` will be replaced with 'v' if it iss not the first char.
 ```
 
 Notes:

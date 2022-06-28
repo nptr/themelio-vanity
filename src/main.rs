@@ -17,7 +17,7 @@ PATTERN:
   0123456789abcdefghjkmnpqrstvwxyz. Unavailable are i,l,o and u.
 
   Characters `i,l,o` will be replaced with 1 or 0 respectively.
-  Character `u` has no \"leet\" substitute and is invalid.
+  `u` will be replaced with 'v' if it iss not the first char.
 ";
 
 fn main() {
@@ -123,6 +123,16 @@ fn alpha_to_num(char: char) -> Option<char> {
 	}
 }
 
+fn un_crockford(char: char) -> Option<char> {
+	match char {
+		'i' => Some('1'),
+		'l' => Some('1'),
+		'o' => Some('0'),
+		'u' => Some('v'),
+		_ => None,
+	}
+}
+
 fn fix_pattern(str: &String) -> Result<String, String> {
 	let lcstr = str.to_lowercase();
 	let mut pattern = String::with_capacity(lcstr.len());
@@ -159,7 +169,7 @@ fn fix_pattern(str: &String) -> Result<String, String> {
 	it.next();
 	for c in it {
 		if !crockford_alphabet.contains(&c) {
-			let cnew = alpha_to_num(c);
+			let cnew = un_crockford(c);
 			if cnew.is_none() {
 				return Err(format!("Wallet address can't contain character '{}'.", c));
 			} else {
@@ -201,7 +211,7 @@ mod tests {
 	#[test]
 	fn fix_pattern_invalid() {
 		assert_eq!(fix_pattern(&String::from("uuu")).is_err(), true);
-		assert_eq!(fix_pattern(&String::from("1uu")).is_err(), true);
-		assert_eq!(fix_pattern(&String::from("11u")).is_err(), true);
+		assert_eq!(fix_pattern(&String::from("1uu")).is_err(), false);
+		assert_eq!(fix_pattern(&String::from("11u")).is_err(), false);
     }
 }
